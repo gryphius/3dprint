@@ -1,15 +1,23 @@
-radius=20;
-height=123;
+
+
+/* [Global] */
+diameter=80;
+height=103;
 wall=5;
 holder=15;
 belt=3;
+
+
+/* [Hidden] */
+radius=diameter/2;
 corner=6;
+fn=300;
 
 //bottle cylinder
 difference(){
 	cylinder(h=height,r=radius,center=True,$fn=1000);
 	translate([0,0,wall]){
-		cylinder(h=height,r=radius-(wall/2),center=True,$fn=1000);
+		cylinder(h=height,r=radius-(wall/2),center=True,$fn=fn);
 	}
 }
 
