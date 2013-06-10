@@ -6,7 +6,7 @@ wall=1.5;
 lip_piece_length=45;
 lip_piece_thickness=3;
 lip_hole_distance=65;
-lip_hole_radius_inner=8;
+lip_hole_radius_inner=9;
 lip_hole_radius_outter=3;
 lip_hole_width=7;
 
@@ -82,9 +82,9 @@ translate([-outter_radius*2,0,-1]){
 module lip_hole(){
 rotate([0,90,90]){  
  hull(){
-   cylinder(r1=lip_hole_radius_inner,r2=lip_hole_radius_outter,h=outter_radius+lip_piece_thickness+5,$fn=circle_points);
+   cylinder(r1=lip_hole_radius_inner,r2=lip_hole_radius_outter,h=wall+lip_piece_thickness+3,$fn=circle_points);
    translate([lip_hole_width-lip_hole_radius_outter,0,0]){
-     cylinder(r1=lip_hole_radius_inner,r2=lip_hole_radius_outter,h=outter_radius+lip_piece_thickness+5,$fn=circle_points);
+     cylinder(r1=lip_hole_radius_inner,r2=lip_hole_radius_outter,h=wall+lip_piece_thickness+3,$fn=circle_points);
   }
  }
 }
@@ -102,7 +102,7 @@ difference(){
     lip_piece();
   }
  } //of union
- translate([0,-2,lip_hole_distance+lip_hole_width/4]){
+ translate([0,inner_radius-2,lip_hole_distance+lip_hole_width/4]){
   lip_hole();
  }
 } //diference
