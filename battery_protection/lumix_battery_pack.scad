@@ -1,7 +1,7 @@
 
-inner_length_long=49.5;
+inner_length_long=49.3;
 inner_length_short=47.5;
-inner_width=37;
+inner_width=36.9;
 short_width=16;
 height=10.5;
 wall_thickness=1.5;
