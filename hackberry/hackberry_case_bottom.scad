@@ -103,6 +103,12 @@ difference(){
   }
 }
 
+
+//holder for the top slide-in
+ translate([0,TOTAL_GROUND_WIDTH/4,BORDER_HEIGHT-6]){
+  cube([BORDER_WIDTH/2,TOTAL_GROUND_WIDTH/2,3]);
+}
+
 //short border 2 small connector
 difference(){
  translate([TOTAL_GROUND_LENGTH-BORDER_WIDTH,0,0]){
