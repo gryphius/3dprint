@@ -17,11 +17,17 @@ open_sd_slot=1; // [1:Open,0:Closed]
 ground_height=2; // [1:5]
 wall_width=3; // [1:5]
 
+//additional wall height to mount the top
+top_height=9;
+
 //height of the four elevator sockets
 elevator_width=6; // [1:10]
 elevator_height=4; // [0:10]
 //gap between board and wall
 gap=3; // [0:10]
+
+//additional vertical offset for each hole
+hole_vertical_offset=2;
 
 /* [Hidden] */
 udoo_board_length=110;
@@ -32,7 +38,7 @@ udoo_board_height=18;
 
 total_ground_length=udoo_board_length+2*gap+2*wall_width;
 total_ground_width=udoo_board_width+2*gap+2*wall_width;
-wall_height=udoo_board_height+2*gap;
+wall_height=udoo_board_height+top_height;
 
 
 module ground(){
@@ -72,46 +78,46 @@ module all_walls(){
 	}
 }
 module hole_in_long_wall_1(offset,width,height){
- translate([wall_width+gap+offset,-1,ground_height+elevator_height]){
+ translate([wall_width+gap+offset,-1,ground_height+elevator_height+hole_vertical_offset]){
    cube([width,wall_width+2,height]);
  }
 }
 
 module hole_in_long_wall_2(offset,width,height){
- translate([wall_width+gap+offset,total_ground_width-wall_width-1,ground_height+elevator_height]){
+ translate([wall_width+gap+offset,total_ground_width-wall_width-1,ground_height+elevator_height+hole_vertical_offset]){
    cube([width,wall_width+2,height]);
  }
 }
 
 module hole_in_short_wall(offset,width,height){
- translate([-1,wall_width+gap+offset,ground_height+elevator_height]){
+ translate([-1,wall_width+gap+offset,ground_height+elevator_height+hole_vertical_offset]){
    cube([wall_width+2,width,height]);
  }
 }
 
 
 module hdmi(){
- hole_in_long_wall_1(33,20,14);
+ hole_in_long_wall_1(33,20,9);
 }
 
 module micro_usb(){
- hole_in_long_wall_1(8,20,6);
+ hole_in_long_wall_1(8,23,6);
 }
 
 module network(){
- hole_in_long_wall_1(50,20,16);
+ hole_in_long_wall_1(50,20,15);
 }
 
 module usb(){
- hole_in_long_wall_1(65,19,16);
+ hole_in_long_wall_1(65,19,15);
 }
 
 module audio(){
- hole_in_long_wall_1(83,16,14);
+ hole_in_long_wall_1(83,19,14);
 }
 
 module power_input(){
- hole_in_long_wall_2(2,6,6);
+ hole_in_long_wall_2(4,8,8);
 }
 
 module power_reset_button(){
@@ -173,23 +179,27 @@ module udoo_case_bottom(){
  
 } // end of module udoo_case
 
-udoo_case_top(){
+module udoo_case_top(){
+  cube([total_ground_length,total_ground_width,ground_height]);
+  translate([wall_width,wall_width,ground_height])cube([total_ground_length-2*wall_width,total_ground_width-2*wall_width,ground_height]);
+}
 
+if (part=="both"){
+ translate([0,-total_ground_width/2,0])udoo_case_bottom();
+ translate([-total_ground_length-2,-total_ground_width/2,0])udoo_case_top();
+} else if (part=="bottom"){
+ translate([-total_ground_length/2,-total_ground_width/2,0])udoo_case_bottom();
+} else if (part=="top") {
+  translate([-total_ground_length/2,-total_ground_width/2,0])udoo_case_top();
+} else if (part=="closed"){
+  translate([-total_ground_length/2,-total_ground_width/2,0])udoo_case_bottom();
+  translate([-total_ground_length/2,total_ground_width/2,0])translate([0,0,2*ground_height+wall_height])rotate([180,0,0]) udoo_case_top();
 }
 
 
-//TODO: center/turn bottom/top based on parts selection
-if (part=="both" || part=="bottom" || part=="closed"){
-	udoo_case_bottom();
-}
-
-//top
-if (part=="both" || parts == "top" || part=="closed") {
-  udoo_case_top();
-}
-
-//TODO: top 
-//TODO: var for top height.. should not be based on gap
+//TODO: top holes (black ports, sata, )
+//TODO: use cylinders for audio/power input/elevator?
+//TODO: screw holes (top)
 
 //Nice to have
 //TODO: Text on walls / top ?
