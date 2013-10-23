@@ -1,17 +1,17 @@
 /* [Global] */
 
 //which parts should be created
-parts = 0; // [0:Bottom and Top,1:Bottom only,2:Top Only,3:Closed case(for display only- not printable)]
+part = "both"; // [both:Bottom and Top,bottom:Bottom only,top:Top Only,closed:Closed case(for display only- not printable)]
 
 /* [Ports] */
-open_power_input=1; // [1:Open,2:Closed]
-open_power_reset_button=1; // [1:Open,2:Closed]
-open_micro_usb=1; // [1:Open,2:Closed]
-open_hdmi=1; // [1:Open,2:Closed]
-open_network=1; // [1:Open,2:Closed]
-open_usb=1; // [1:Open,2:Closed]
-open_audio=1; // [1:Open,2:Closed]
-open_sd_slot=1; // [1:Open,2:Closed]
+open_power_input=1; // [1:Open,0:Closed]
+open_power_and_reset_button=1; // [1:Open,0:Closed]
+open_micro_usb=1; // [1:Open,0:Closed]
+open_hdmi=1; // [1:Open,0:Closed]
+open_network=1; // [1:Open,0:Closed]
+open_usb=1; // [1:Open,0:Closed]
+open_audio=1; // [1:Open,0:Closed]
+open_sd_slot=1; // [1:Open,0:Closed]
 
 /* [Advanced] */
 ground_height=2; // [1:5]
@@ -160,7 +160,7 @@ module udoo_case_bottom(){
  }
 
  /* short wall holes */
- if (open_power_reset_button==1){
+ if (open_power_and_reset_button==1){
    power_reset_button();
  }
 
@@ -179,17 +179,17 @@ udoo_case_top(){
 
 
 //TODO: center/turn bottom/top based on parts selection
-if (parts==0 || parts==1 || parts==3){
+if (part=="both" || part=="bottom" || part=="closed"){
 	udoo_case_bottom();
 }
 
 //top
-if (parts==0 || parts == 2 || parts==3) {
+if (part=="both" || parts == "top" || part=="closed") {
   udoo_case_top();
-
 }
 
 //TODO: top 
+//TODO: var for top height.. should not be based on gap
 
 //Nice to have
 //TODO: Text on walls / top ?
