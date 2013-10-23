@@ -1,23 +1,32 @@
-/* config */
-open_power_input=1;
-open_power_reset_button=1;
-open_micro_usb=1;
-open_hdmi=1;
-open_network=1;
-open_usb=1;
-open_audio=1;
-open_sd_slot=1;
+/* [Global] */
 
-ground_height=2;
-wall_width=3;
-elevator_height=4;
-gap=3;
+//which parts should be created
+parts = 0; // [0:Bottom and Top,1:Bottom only,2:Top Only,3:Closed case(for display only- not printable)]
 
-/* measured */
+/* [Ports] */
+open_power_input=1; // [1:Open,2:Closed]
+open_power_reset_button=1; // [1:Open,2:Closed]
+open_micro_usb=1; // [1:Open,2:Closed]
+open_hdmi=1; // [1:Open,2:Closed]
+open_network=1; // [1:Open,2:Closed]
+open_usb=1; // [1:Open,2:Closed]
+open_audio=1; // [1:Open,2:Closed]
+open_sd_slot=1; // [1:Open,2:Closed]
+
+/* [Advanced] */
+ground_height=2; // [1:5]
+wall_width=3; // [1:5]
+
+//height of the four elevator sockets
+elevator_width=6; // [1:10]
+elevator_height=4; // [0:10]
+//gap between board and wall
+gap=3; // [0:10]
+
+/* [Hidden] */
 udoo_board_length=110;
 udoo_board_width=86;
 udoo_board_height=18;
-
 
 /* derived vars */
 
@@ -113,7 +122,14 @@ module sd_slot(){
  hole_in_short_wall(34,13,4);
 }
 
-module udoo_case(){
+module elevators(){
+ translate([wall_width+gap,wall_width+gap,ground_height])cube([elevator_width,elevator_width,elevator_height]);
+ translate([total_ground_length-wall_width-gap-elevator_width,wall_width+gap,ground_height])cube([elevator_width,elevator_width,elevator_height]);
+ translate([wall_width+gap,total_ground_width-wall_width-gap-elevator_width,ground_height])cube([elevator_width,elevator_width,elevator_height]);
+ translate([total_ground_length-wall_width-gap-elevator_width,total_ground_width-wall_width-gap-elevator_width,ground_height])cube([elevator_width,elevator_width,elevator_height]);
+}
+
+module udoo_case_bottom(){
  difference(){
 	all_walls();
 
@@ -151,8 +167,30 @@ module udoo_case(){
  if (open_sd_slot==1){
    sd_slot();
  }
-
  } // end of difference
+
+ elevators();
+ 
 } // end of module udoo_case
 
-udoo_case();
+udoo_case_top(){
+
+}
+
+
+//TODO: center/turn bottom/top based on parts selection
+if (parts==0 || parts==1 || parts==3){
+	udoo_case_bottom();
+}
+
+//top
+if (parts==0 || parts == 2 || parts==3) {
+  udoo_case_top();
+
+}
+
+//TODO: top 
+
+//Nice to have
+//TODO: Text on walls / top ?
+//TODO: 2.5'' drive case on top?
