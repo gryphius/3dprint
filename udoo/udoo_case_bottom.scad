@@ -3,7 +3,7 @@
 //which parts should be created
 part = "bottom"; // [both:Bottom and Top,bottom:Bottom only,top:Top Only,closed:Closed case(for display only- not printable)]
 
-/* [Ports] */
+/* [Connectors Bottom] */
 open_power_input=1; // [1:Open,0:Closed]
 open_power_and_reset_button=1; // [1:Open,0:Closed]
 open_micro_usb=1; // [1:Open,0:Closed]
@@ -13,23 +13,31 @@ open_usb=1; // [1:Open,0:Closed]
 open_audio=1; // [1:Open,0:Closed]
 open_sd_slot=1; // [1:Open,0:Closed]
 
+/* [Connectors Top] */
+open_gpio=1; // [1:Open,0:Closed]
+open_sata=1; // [1:Open,0:Closed]
+open_lvds=1; // [1:Open,0:Closed]
+open_camera=1; // [1:Open,0:Closed]
+open_dc_in=1; // [1:Open,0:Closed]
+open_rtc_batt=1; // [1:Open,0:Closed]
+open_additional_usb=1; // [1:Open,0:Closed]
+open_spi=1; // [1:Open,0:Closed]
+
 /* [Advanced] */
 //add mouse ears to prevent warping
-mouse_ear_radius=0; // [0:10]
+mouse_ear_radius=12; // [0:20]
 circle_accuracy=50; // [25:200]
+//base height for ground/top plate
 ground_height=2; // [1:5]
 wall_width=2; // [1:5]
-
-//additional wall height to mount the top
+//gap between board and wall
+gap=2; // [0:10]
+//additional wall height 
 top_height=9;
-
 //height of the four elevator sockets
 elevator_width=6; // [1:10]
 elevator_height=4; // [0:10]
-//gap between board and wall
-gap=3; // [0:10]
-
-
+wall_text="UDOO";
 
 /* [Hidden] */
 udoo_board_length=110;
@@ -37,7 +45,8 @@ udoo_board_width=86;
 udoo_board_height=18;
 //additional vertical offset for each hole ("baseline")
 hole_vertical_offset=2;
-
+//don't turn top
+debug=false;
 
 /* derived vars */
 
@@ -45,6 +54,13 @@ total_ground_length=udoo_board_length+2*gap+2*wall_width;
 total_ground_width=udoo_board_width+2*gap+2*wall_width;
 wall_height=udoo_board_height+top_height;
 
+top_hole=3*ground_height;
+
+
+include <write/Write.scad>
+
+
+/* *************BOTTOM****************** */
 
 module ground(){
  cube([total_ground_length,total_ground_width,ground_height]);
@@ -79,7 +95,13 @@ module all_walls(){
 	
 	//short wall with no holes
 	translate([total_ground_length-wall_width,0,ground_height]){
-		short_wall();
+    difference(){ 
+     short_wall();
+       if (wall_text!=""){
+			writecube(wall_text,[wall_width-1,total_ground_width/2,wall_height/2],[wall_width,total_ground_width,wall_height],face="right",h=12);
+       }
+    }
+    
 	}
 }
 module hole_in_long_wall_1(offset,width,height,voffset=0,type="cube"){
@@ -110,32 +132,32 @@ module hole_in_short_wall(offset,width,height,voffset=0){
 
 
 module hdmi(){
- hole_in_long_wall_1(34,15,7);
+ hole_in_long_wall_1(34,16,7);
 }
 
 module micro_usb(){
- hole_in_long_wall_1(8,23,6,-2);
+ hole_in_long_wall_1(8,23,6,-1);
 }
 
 module network(){
- hole_in_long_wall_1(50,16,15);
+ hole_in_long_wall_1(51,16,15);
 }
 
 module usb(){
- hole_in_long_wall_1(67,19,15);
+ hole_in_long_wall_1(68,17,15);
 }
 
 module audio(){
- hole_in_long_wall_1(86.5,9,9,type="cylinder",voffset=3);
- hole_in_long_wall_1(96,9,9,type="cylinder",voffset=3);
+ hole_in_long_wall_1(85.5,9,9,type="cylinder",voffset=3);
+ hole_in_long_wall_1(95.5,9,9,type="cylinder",voffset=3);
 }
 
 module power_input(){
- hole_in_long_wall_2(5,10,10,voffset=2,type="cylinder");
+ hole_in_long_wall_2(3,10,10,voffset=2,type="cylinder");
 }
 
 module power_reset_button(){
- hole_in_short_wall(7,17,7);
+ hole_in_short_wall(7,17,9);
 }
 
 module sd_slot(){
@@ -150,16 +172,22 @@ module elevators(){
 }
 
 
-module mouse_ears(){
+module mouse_ear_cylinders(){
  if (mouse_ear_radius > 0 ) {
   for (i = [0,total_ground_length]){
    for (j = [0,total_ground_width]){
 		translate([i,j,0])cylinder(r=mouse_ear_radius,h=0.5,$fn=circle_accuracy);
    }
   }
-   
  }
 }
+module mouse_ears(){
+ color("grey") difference(){
+  mouse_ear_cylinders();
+  translate([0,0,-1])cube([total_ground_length,total_ground_width,1]);
+ }
+}
+
 module udoo_case_bottom(){
  difference(){
 	all_walls();
@@ -201,20 +229,104 @@ module udoo_case_bottom(){
  } // end of difference
 
  elevators();
- mouse_ears();
 
-} // end of module udoo_case
 
-module udoo_case_top(){
-  //main plate
-  cube([total_ground_length,total_ground_width,ground_height]);
+} // end of module udoo_case_bottom
+
+/* *************TOP****************** */
+
+
+module top_gpio(){
+	//north
+	translate([30,87,0])cube([80,4,top_hole]);
+	//east
+	translate([105,37,0])cube([6,54,top_hole]);
+	//south
+	 translate([40,37,0])cube([67,4,top_hole]);
+}
+
+module top_lvds(){
+	translate([88,30,0])cube([26,6,top_hole]);
+}
+module top_sata(){
+	translate([96,24,0])cube([18,7,top_hole]);
+}
+module top_camera(){
+	translate([111,10,0])cube([4,12,top_hole]);
+}
+module top_dc_in(){
+	translate([63,33,0])cube([8,6,top_hole]);
+}
+module top_rtc_batt(){
+	translate([6,29,0])cube([4,7,top_hole]);
+}
+module top_usb(){
+	translate([20,10,0])cube([10,5,top_hole]);
+}
+module top_spi(){
+	translate([73,21,0])cube([12,4,top_hole]);
+}
+
+module top_base_frame(){
+ //main plate
+  translate([0,0,ground_height])cube([total_ground_length,total_ground_width,ground_height]);
 
   //frame
-  translate([wall_width,wall_width,ground_height]) difference(){
+  translate([wall_width,wall_width,0]) difference(){
   cube([total_ground_length-2*wall_width,total_ground_width-2*wall_width,ground_height]);
-  translate([1,1,1])cube([total_ground_length-2*wall_width-2,total_ground_width-2*wall_width-2,ground_height]);
+  translate([1,1,-1])cube([total_ground_length-2*wall_width-2,total_ground_width-2*wall_width-2,ground_height]);
   }
+
+  //corners
+  corner_height=7;
+  corner_length=5;
+  translate([wall_width,wall_width,-corner_height])cube([corner_length,wall_width,corner_height]);
+  translate([total_ground_length-wall_width-corner_length,wall_width,-corner_height])cube([corner_length,wall_width,corner_height]);
+
+   translate([wall_width,total_ground_width-2*wall_width,-corner_height])cube([corner_length,wall_width,corner_height]);
+
+ translate([total_ground_length-wall_width-corner_length,total_ground_width-2*wall_width,-corner_height])cube([corner_length,wall_width,corner_height]);
 }
+
+module udoo_case_top(){
+  difference(){
+	top_base_frame();
+
+  if (open_gpio==1){
+	 top_gpio();
+  }
+
+  if (open_sata==1){
+	 top_sata();
+  }
+
+ if (open_lvds==1){
+	 top_lvds();
+  }
+
+ if (open_camera==1){
+	 top_camera();
+  }
+ if (open_dc_in==1){
+	 top_dc_in();
+  }
+ if (open_rtc_batt==1){
+	 top_rtc_batt();
+  }
+ if (open_additional_usb==1){
+	 top_usb();
+  }
+
+if (open_spi==1){
+	 top_spi();
+  }
+ } //end of difference
+
+}
+
+
+
+/* ************* "MAIN PROGRAM" ****************** */
 
 if (part=="both"){
  translate([0,-total_ground_width/2,0]){
@@ -222,18 +334,31 @@ if (part=="both"){
     //Test holes here
    // hole_in_long_wall_1(87,19,14,type="cylinder");
  }
- translate([-total_ground_length-2,-total_ground_width/2,0])udoo_case_top();
+ translate([-total_ground_length-2,total_ground_width/2,2*ground_height])rotate([180,0,0])udoo_case_top();
+
 } else if (part=="bottom"){
  translate([-total_ground_length/2,-total_ground_width/2,0])udoo_case_bottom();
+ translate([-total_ground_length/2,-total_ground_width/2,0])mouse_ears();
 } else if (part=="top") {
-  translate([-total_ground_length/2,-total_ground_width/2,0])udoo_case_top();
+  if(debug==true){
+  	udoo_case_top();
+  } else {
+	translate([-total_ground_length/2,total_ground_width/2,2*ground_height])rotate([180,0,0])udoo_case_top();
+  translate([-total_ground_length/2,-total_ground_width/2,0]) mouse_ears();
+		
+  }
+
+
 } else if (part=="closed"){
-  translate([-total_ground_length/2,-total_ground_width/2,0])udoo_case_bottom();
-  translate([-total_ground_length/2,total_ground_width/2,0])translate([0,0,2*ground_height+wall_height])rotate([180,0,0]) udoo_case_top();
+  color("Crimson")translate([-total_ground_length/2,-total_ground_width/2,0])udoo_case_bottom();
+  color("Khaki")translate([-total_ground_length/2,-total_ground_width/2,0])translate([0,0,wall_height]) udoo_case_top();
 }
 
+/*
+mouse ears 12
+*/
 
-//TODO: top holes (black ports, sata, )
+
 //TODO: screw holes (top)
 
 //Nice to have
