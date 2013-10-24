@@ -383,10 +383,6 @@ if (part=="both"){
  //test code here
 }
 
-/*
-mouse ears 12
-*/
-
 
 //TODO: screw holes (top)
 
