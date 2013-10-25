@@ -70,6 +70,8 @@ top_hole=3*ground_height;
 
 /* uncomment block below to override config for development */
 /*
+//TODO: switch edge in top right corner
+
 	open_power_input=1; 
 	open_power_and_reset_button=1; 
 	open_micro_usb=1; 
