@@ -23,9 +23,18 @@ open_rtc_batt=0; // [1:Open,0:Closed]
 open_additional_usb=0; // [1:Open,0:Closed]
 open_spi=1; // [1:Open,0:Closed]
 
+/* [Anti-Warp] */
+//add mouse ears around the corners
+add_mouse_ears=0; //[1:Yes,0:No]
+mouse_ear_radius=12; // [0:20]
+
+//build a wall around the edges
+add_heat_wall=0; ////[1:Yes,0:No]
+heat_wall_height=25; // [10:30]
+heat_wall_width=1; // [1:5]
+heat_wall_distance=5; //[1:10]
+
 /* [Advanced] */
-//add mouse ears to prevent warping
-mouse_ear_radius=0; // [0:20]
 circle_accuracy=50; // [25:200]
 //base height for ground/top plate
 ground_height=2; // [1:5]
@@ -79,8 +88,10 @@ top_hole=3*ground_height;
 	open_additional_usb=1;
 	open_spi=1; 
 
+	add_mouse_ears=1;
+	add_heat_wall=1;
    mouse_ear_radius=20;
-   part="bottom";
+   part="top";
 */
 
 
@@ -201,17 +212,26 @@ module elevators(){
 module mouse_ear_cylinders(){
   for (i = [0,total_ground_length]){
    for (j = [0,total_ground_width]){
-		color("grey") translate([i,j,0])cylinder(r=mouse_ear_radius,h=0.5,$fn=circle_accuracy);
+		color("grey")translate([i,j,0])cylinder(r=mouse_ear_radius,h=0.5,$fn=circle_accuracy);
    }
   }
 }
 module mouse_ears(){
-if(mouse_ear_radius>0){
-  mouse_ear_cylinders();
-    difference(){
-   translate([0,0,-1])cube([total_ground_length,total_ground_width,3*ground_height]);
- }
- }
+	if(add_mouse_ears==1){
+		difference(){
+			mouse_ear_cylinders();
+			translate([0,0,-1])cube([total_ground_length,total_ground_width,3*ground_height]);
+	 	}
+	}
+}
+
+module heat_wall(){
+	if(add_heat_wall==1){
+		translate([-heat_wall_distance-heat_wall_width,-heat_wall_distance-heat_wall_width,0])difference(){
+			cube([total_ground_length+2*(heat_wall_distance+heat_wall_width),total_ground_width+2*(heat_wall_distance+heat_wall_width),heat_wall_height]);
+			translate([heat_wall_width,heat_wall_width,-1])cube([total_ground_length+2*heat_wall_distance,total_ground_width+2*heat_wall_distance,heat_wall_height+2]);
+		}
+	}
 }
 
 module udoo_case_bottom(){
@@ -363,8 +383,11 @@ if (part=="both"){
  translate([-total_ground_length-2,total_ground_width/2,2*ground_height])rotate([180,0,0])udoo_case_top();
 
 } else if (part=="bottom"){
- translate([-total_ground_length/2,-total_ground_width/2,0])udoo_case_bottom();
- translate([-total_ground_length/2,-total_ground_width/2,0])mouse_ears();
+ translate([-total_ground_length/2,-total_ground_width/2,0]){
+	udoo_case_bottom();
+	mouse_ears();
+	heat_wall();
+ }
 } else if (part=="top") {
   if(debug==true){
   	udoo_case_top();
@@ -374,13 +397,13 @@ if (part=="both"){
 		
   }
 
-
 } else if (part=="closed"){
   color("Crimson")translate([-total_ground_length/2,-total_ground_width/2,0])udoo_case_bottom();
   color("Khaki")translate([-total_ground_length/2,-total_ground_width/2,0])translate([0,0,wall_height]) udoo_case_top();
 } else {
  echo("unknown part");
  //test code here
+ 
 }
 
 
