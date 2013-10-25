@@ -90,8 +90,9 @@ top_hole=3*ground_height;
 
 	add_mouse_ears=1;
 	add_heat_wall=1;
+	heat_wall_width=2;
    mouse_ear_radius=20;
-   part="top";
+   part="bottom";
 */
 
 
@@ -190,7 +191,7 @@ module audio(){
 }
 
 module power_input(){
- hole_in_long_wall_2(3,10,10,voffset=3,type="cylinder");
+ hole_in_long_wall_2(2,10,10,voffset=2,type="cylinder");
 }
 
 module power_reset_button(){
