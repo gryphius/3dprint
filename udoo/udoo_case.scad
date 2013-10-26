@@ -10,7 +10,8 @@ open_micro_usb=1; // [1:Open,0:Closed]
 open_hdmi=1; // [1:Open,0:Closed]
 open_network=1; // [1:Open,0:Closed]
 open_usb=1; // [1:Open,0:Closed]
-open_audio=1; // [1:Open,0:Closed]
+open_audio_in=1; // [1:Open,0:Closed]
+open_audio_out=1; // [1:Open,0:Closed]
 open_sd_slot=1; // [1:Open,0:Closed]
 
 /* [Connectors Top] */
@@ -56,7 +57,7 @@ udoo_board_height=18;
 hole_vertical_offset=2;
 
 //don't turn top
-debug=true;
+debug=false;
 //ovverride default config above
 all_on=false; 
 
@@ -69,8 +70,6 @@ top_hole=3*ground_height;
 
 
 /* uncomment block below to override config for development */
-
-//TODO: switch edge in top right corner
 /*
 	open_power_input=1; 
 	open_power_and_reset_button=1; 
@@ -78,7 +77,8 @@ top_hole=3*ground_height;
 	open_hdmi=1;
 	open_network=1; 
 	open_usb=1; 
-	open_audio=1;
+	open_audio_in=1;
+	open_audio_out=1;
 	open_sd_slot=1; 
 	
 	open_gpio=1; 
@@ -91,7 +91,7 @@ top_hole=3*ground_height;
 	open_spi=1; 
 
 	add_mouse_ears=1;
-	add_heat_wall=1;
+	//add_heat_wall=1;
 	heat_wall_width=2;
    mouse_ear_radius=20;
    part="bottom";
@@ -187,9 +187,11 @@ module usb(){
  hole_in_long_wall_1(68,17,14.5);
 }
 
-module audio(){
- hole_in_long_wall_1(85.5,9,9,type="cylinder",voffset=3);
- hole_in_long_wall_1(95.5,9,9,type="cylinder",voffset=3);
+module audio_out(){
+ hole_in_long_wall_1(86,8.5,9,type="cylinder",voffset=3);
+}
+module audio_in(){
+ hole_in_long_wall_1(95.5,8.5,9,type="cylinder",voffset=3);
 }
 
 module power_input(){
@@ -258,8 +260,11 @@ module udoo_case_bottom(){
     usb();
   }
 
-  if (open_audio==1){
-    audio();
+  if (open_audio_in==1){
+    audio_in();
+  }
+  if (open_audio_out==1){
+    audio_out();
   }
 
  /* long wall 2 holes */
