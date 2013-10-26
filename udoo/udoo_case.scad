@@ -56,7 +56,7 @@ udoo_board_height=18;
 hole_vertical_offset=2;
 
 //don't turn top
-debug=false;
+debug=true;
 //ovverride default config above
 all_on=false; 
 
@@ -69,9 +69,9 @@ top_hole=3*ground_height;
 
 
 /* uncomment block below to override config for development */
-/*
-//TODO: switch edge in top right corner
 
+//TODO: switch edge in top right corner
+/*
 	open_power_input=1; 
 	open_power_and_reset_button=1; 
 	open_micro_usb=1; 
@@ -329,12 +329,12 @@ module top_base_frame(){
   //corners
   corner_height=7;
   corner_length=5;
-  translate([wall_width,wall_width,-corner_height])cube([corner_length,wall_width,corner_height]);
-  translate([total_ground_length-wall_width-corner_length,wall_width,-corner_height])cube([corner_length,wall_width,corner_height]);
+  translate([wall_width,wall_width,ground_height-corner_height])cube([corner_length,wall_width,corner_height]);
+  translate([total_ground_length-wall_width-corner_length,wall_width,ground_height-corner_height])cube([corner_length,wall_width,corner_height]);
 
-   translate([wall_width,total_ground_width-2*wall_width,-corner_height])cube([corner_length,wall_width,corner_height]);
+   translate([wall_width,total_ground_width-2*wall_width,ground_height-corner_height])cube([corner_length,wall_width,corner_height]);
 
- translate([total_ground_length-wall_width-corner_length,total_ground_width-2*wall_width,-corner_height])cube([corner_length,wall_width,corner_height]);
+  translate([total_ground_length-2*wall_width,total_ground_width-wall_width-corner_length,ground_height-corner_height])cube([wall_width,corner_length,corner_height]);
 }
 
 module udoo_case_top(){
