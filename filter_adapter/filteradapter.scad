@@ -6,7 +6,7 @@ thread_thickness=1;
 
 //the large one with the inner thread 
 inner_cylinder_height=5;
-inner_cylinder_inner_diameter=64;
+inner_cylinder_inner_diameter=63;
 inner_cylinder_thickness=3;
 
 //the small one with the outter thread
@@ -14,7 +14,7 @@ outter_cylinder_height=5;
 outter_cylinder_outter_diameter=58;
 outter_cylinder_thickness=5;
 
-connector_r1=33;
+connector_r1=32;
 connector_r2=29;
 connector_height=3;
 connector_thickness=1.5;
