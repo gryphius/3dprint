@@ -1,0 +1,12 @@
+{
+ "description"                : "Makerbot Makerware Desktop"
+ ,"maintainer"                : "Oli Schacher <oli@wgwh.ch>"
+ ,"executable"                : "/usr/bin/makerware"
+ ,"user-dirs"                 : ["Downloads"]
+ ,"system-dirs"               : []
+ ,"x11"                       : true
+ ,"sound-card"                : false
+ ,"inherit-working-directory" : true
+ ,"allow-network-access"      : true
+}
+
