@@ -1,22 +1,53 @@
-/* [Global] */
-diameter=58;  //typical values: 52, 58, 62, 67, 72, 77...
-wall_thickness=2;
-cap_thickness=2; //cap floor
-cap_height=7; //total height of the cap
+use <threads.scad>;
 
-holder_width=3; //small inner frame holding the cap
-holder_height=0.5; 
-
-/* [Advanced] */
-circle_accuracy=200;
-diameter_offset=0.5; //correction from lens diameter
-
-/* [Hidden] */
-outter_r=(diameter+wall_thickness)/2;
+fn=800;
+thread_thickness=1;
 
 
-difference(){
- cylinder(r=outter_r,h=cap_height,$fn=circle_accuracy);
- translate([0,0,cap_thickness])cylinder(r=diameter/2,h=cap_height-cap_thickness-holder_height,$fn=circle_accuracy);
- translate([0,0,cap_thickness])cylinder(r=(diameter-holder_width)/2,h=cap_height,$fn=circle_accuracy);
+//the large one with the inner thread 
+inner_cylinder_height=2;
+inner_cylinder_inner_diameter=63;
+inner_cylinder_thickness=3;
+
+//the small one with the outter thread
+outter_cylinder_height=5;
+outter_cylinder_outter_diameter=58;
+outter_cylinder_thickness=5;
+
+connector_r1=32;
+connector_r2=29;
+connector_height=3;
+connector_thickness=1.5;
+
+module outter(){
+  difference(){
+	  metric_thread(outter_cylinder_outter_diameter,thread_thickness,outter_cylinder_height);
+    translate([0,0,-1])cylinder(h=outter_cylinder_height+2,r=(outter_cylinder_outter_diameter-outter_cylinder_thickness/2)/2, $fn=fn);
+  }
 }
+
+module inner(){
+//inner thread
+difference(){
+ cylinder(h=inner_cylinder_height, r=(inner_cylinder_inner_diameter+inner_cylinder_thickness/2)/2, $fn=fn);
+ 
+
+}
+}
+
+module connector(){
+ difference(){
+	 cylinder(h=connector_height,r1=connector_r1,r2=connector_r2,$fn=fn);
+	 translate([0,0,-0.01])cylinder(h=connector_height+0.02,r1=connector_r1-connector_thickness,r2=connector_r2-connector_thickness,$fn=fn);
+ }
+}
+
+module adapter(){
+	inner();
+	translate([0,0,inner_cylinder_height-0.01])connector();
+	translate([0,0,inner_cylinder_height+connector_height-0.01])outter();
+}
+
+//rotate([0,0,180])adapter();
+
+adapter();
