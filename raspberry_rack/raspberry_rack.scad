@@ -1,3 +1,5 @@
+// preview[view:east, tilt:top]
+
 /* [Global] */
 //how many raspis to stack on each other
 rack_height=4; //[1:10]
