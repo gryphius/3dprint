@@ -1,4 +1,7 @@
+//raspberry pi rack based on http://www.thingiverse.com/thing:641219 by mbh16
+// creative commons Attribution-ShareAlike 3.0
 // preview[view:east, tilt:top]
+
 
 /* [Global] */
 //how many raspis to stack on each other
