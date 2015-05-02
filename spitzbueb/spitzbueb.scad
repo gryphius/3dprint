@@ -50,6 +50,6 @@ module holder(){
 }
 
 bigbase();
-eyes();
-translate([0,-1,0])mouth();
-holder();
+//eyes();
+//translate([0,-1,0])mouth();
+//holder();

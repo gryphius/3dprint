@@ -30,6 +30,7 @@ aslop=18;// Bevelled edges mean we need them extra-wide for the channels to matc
 va=18;
 nubd=2;	// Diameter of the locking nub
 
+
 aoff=(360/sectors)*(6+6);
 // Maze generator which takes ASCII art
 // It takes 14x8 mazes, which amount to
