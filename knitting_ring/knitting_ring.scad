@@ -1,9 +1,9 @@
-outter_radius = 20;
-inner_radius = 10;
+outter_radius = 16;
+inner_radius = 6;
 thickness = 1;
-height = 10;
-acc = 150;
-knob_radius=1.5;
+height = 12;
+acc = 50;
+knob_radius=2;
 
 module half_ring(){
     difference(){
@@ -35,7 +35,7 @@ module part1(){
 
 
 module smallblock(){
-    cube([outter_radius-inner_radius,thickness,height]);
+    cube([outter_radius-inner_radius,thickness*0.9,height]);
 }
 module knob(){
     difference(){
