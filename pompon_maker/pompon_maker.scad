@@ -1,9 +1,23 @@
-outter_radius = 16;
-inner_radius = 6;
-thickness = 1;
-height = 12;
-acc = 50;
-knob_radius=2;
+/* [Global] */
+//total diameter in cm
+diameter = 35;
+
+//hole diameter in mm
+hole_diameter = 20;
+
+//thickness in mm
+thickness = 1.5;
+
+//knob radius in mm
+knob_radius = 2;
+
+handle_height = 12;
+
+/* [Hidden] */
+outter_radius = diameter/2.0;
+inner_radius = hole_diameter/2.0;
+acc = 100;
+height=handle_height;
 
 module half_ring(){
     difference(){
