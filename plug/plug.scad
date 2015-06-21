@@ -1,6 +1,6 @@
-plug_height=10;
-plug_radius_small=10;
-plug_radius_big=12;
+plug_height=8;
+plug_radius_small=11;
+plug_radius_big=13;
 lid_height=2;
 lid_radius=14;
 fn=120;
