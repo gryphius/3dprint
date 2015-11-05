@@ -3,6 +3,8 @@
 sphere_diameter = 150;
 wall=2;
 
+floor_height=4;
+
 /* opening info */
 antenna_hole_z = 20;
 antenna_hole_diameter = 10;
@@ -46,11 +48,11 @@ module rectangular_hole(angle,length,height){
 
 
 module floor(){
-    cylinder(r=sphere_radius-wall-0.2,h=4);
+    cylinder(r=sphere_radius-wall-0.2,h=floor_height);
 }
 
 
-module roof(){
+module roof(){ 
 difference(){
     //the half sphere
     empty_half_sphere(sphere_radius,wall);
@@ -70,7 +72,7 @@ difference(){
 }
 
 color("Blue",0.4)floor();
-color("Red",0.8)roof();
+//color("Red",0.8)roof();
 
 
 
