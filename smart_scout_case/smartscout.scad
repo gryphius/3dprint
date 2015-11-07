@@ -6,21 +6,25 @@ wall=2;
 floor_height=4;
 
 /* opening info */
-antenna_hole_z = 20;
-antenna_hole_diameter = 10;
+antenna_hole_z = 64;
+antenna_hole_diameter = 12;
 
-pir_diameter = 7;
+pir_diameter = 11;
 
-display_hole_height = 10;
-display_hole_length = 40;
+display_hole_height = 16;
+display_hole_length = 32;
 display_hole_angle = 30;
 
-button_hole_height = 20;
-button_hole_length = 20;
-button_hole_angle = 50;
+//button_hole_height = 20;
+//button_hole_length = 20;
+button_hole_angle = 60;
+button_hole_diameter = 18;
+
+led_diameter = 9;
+led_angle = 30;
 
 /* generic settings */
-$fn=90;
+$fn=120;
 
 
 /* calculate some stuff */
@@ -61,20 +65,35 @@ difference(){
     translate([-sphere_radius-wall,0,antenna_hole_z])rotate([0,90,0])cylinder( r= antenna_hole_radius, h=sphere_radius );
     
     //pir
-    cylinder(r=pir_diameter,h=sphere_radius+wall);
+    cylinder(r=pir_diameter/2,h=sphere_radius+wall);
+    
+    //led
+    rotate([0,98-led_angle,0])cylinder(r=led_diameter/2,h=sphere_radius+wall);
     
     //display
     rectangular_hole(display_hole_angle,display_hole_length,display_hole_height);
     
     //button
-    rectangular_hole(button_hole_angle,button_hole_length,button_hole_height);
+    rotate([0,90-button_hole_angle,0])cylinder(r=button_hole_diameter/2,h=sphere_radius+wall);
+    
 }
 }
+
+//continue failed print
+module partial_roof(offset){
+  translate([0,0,-offset])difference(){
+   roof();  
+   translate([0,0,-1])cylinder(r=sphere_radius+10,h=offset+1);   
+  }
+}
+
+
+//partial_roof(59);
 
 color("Blue",0.4)floor();
-//color("Red",0.8)roof();
+color("Red",0.8)roof();
 
-
-
+//5 cm test
+//translate([-sphere_radius-5,0,0])cube([3,3,50]);
 
 
