@@ -75,11 +75,11 @@ module hohler_stamm(){
 
 
 //stamm();
-//hohles_pilzdach();
-hohler_stamm();
+hohles_pilzdach();
+//hohler_stamm();
 
 //orig
-%translate([0,0,stammhoehe])hohles_pilzdach();
+//%translate([0,0,stammhoehe])hohles_pilzdach();
 
 //printable
 //translate([2*radius,0,0])hohles_pilzdach();

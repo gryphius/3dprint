@@ -1,9 +1,13 @@
 back_len=30;
 front_len=25;
 deep = 14;
+
 height=30;
+
 position=36;
+
 rotation=30;
+
 wall=2;
 
 //all lengths are +1mm to allow some wiggling
