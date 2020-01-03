@@ -1,4 +1,4 @@
-makerbot
+3dprint
 ========
 
-Stuff I designed to print out on the makerbot. Most objects are probably not of much use to others. The interesting ones are published on thingiverse : http://www.thingiverse.com/gryphius/designs
+Stuff I designed to print out on the 3D printer. The interesting ones are published on thingiverse : http://www.thingiverse.com/gryphius/designs
