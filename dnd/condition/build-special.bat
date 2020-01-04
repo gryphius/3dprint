@@ -1,0 +1,1 @@
+openscad -D num=2 -D "txt="""Feared"" -o feared.stl conditions.scad
