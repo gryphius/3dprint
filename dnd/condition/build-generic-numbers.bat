@@ -1,6 +1,7 @@
 :: Generic / Numbers
 openscad -D num=2 -D "txt="""Advantage"" -o advantage.stl conditions.scad
 openscad -D num=2 -D "txt="""Disadvantage"" -o disadvantage.stl conditions.scad
+openscad -D num=2 -D "txt="""Concentrating"" -o concentrating.stl conditions.scad
 openscad -D num=4 -D "txt="""1"" -o 1.stl conditions.scad
 openscad -D num=4 -D "txt="""2"" -o 2.stl conditions.scad
 openscad -D num=4 -D "txt="""3"" -o 3.stl conditions.scad
