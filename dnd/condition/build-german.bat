@@ -13,3 +13,6 @@ openscad -D num=2 -D "txt="""Festgesetzt"" -o ger_festgesetzt.stl conditions.sca
 openscad -D num=3 -D "txt="""Gepackt"" -o ger_gepackt.stl conditions.scad
 openscad -D num=2 -D "txt="""Bewusstlos"" -o ger_bewusstlos.stl conditions.scad
 openscad -D num=2 -D "txt="""Betaeubt"" -o ger_betaeubt.stl conditions.scad
+openscad -D num=2 -D "txt="""Konzentration"" -o ger_konzentration.stl conditions.scad
+openscad -D num=2 -D "txt="""Vorteil"" -o ger_vorteil.stl conditions.scad
+openscad -D num=2 -D "txt="""Nachteil"" -o ger_nachteil.stl conditions.scad
