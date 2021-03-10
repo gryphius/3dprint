@@ -68,5 +68,5 @@ module part2(){
     translate([-(inner_radius+half_circ),-knob_radius,0])knob();
 }
 translate([outter_radius,0,0])part1();
-translate([-outter_radius-2,0,thickness])rotate([-90,0,0])part2();
+translate([-outter_radius-2,0,thickness*0.9])rotate([-90,0,0])part2();
 
