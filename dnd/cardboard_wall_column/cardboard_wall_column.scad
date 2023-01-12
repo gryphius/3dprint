@@ -5,13 +5,13 @@ column_total_height=80; // 80: standard height for my 24mm tileset
 
 column_type=2; // [1:Simple Rectangular,2:Simple Round]
 
-foundation_height=2;
+foundation_height=4;
 
 bricks=true;
 brick_height=column_total_height/9;
 mortar_size=0.4;
 
-fissure_width=3;
+fissure_width=2.5;
 north_fissure=true;
 east_fissure=true;
 south_fissure=true;
@@ -31,7 +31,7 @@ module cylinder_bricks(cylinder_radius){
                         translate([0,0,i])cylinder(h=mortar_size,r=cylinder_radius+1,center=true,$fn=fn);
                         translate([0,0,i])cylinder(h=mortar_size+0.1,r=cylinder_radius-mortar_size,center=true,$fn=fn);
                    }
-                   start_offset = rands(0,60,1)[0];
+                   start_offset = rands(0,40,1)[0];
                    for(mortar_angle=[0:40:360]){
                        render()rotate([0,0,start_offset+mortar_angle])difference(){
                            translate([0,0,i])pieSlice(1,cylinder_radius+mortar_size,brick_height-mortar_size);
