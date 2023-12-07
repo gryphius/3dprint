@@ -12,7 +12,7 @@ clearance=1;
 hook_base_height=30;
 hook_thickness=rail_gap - clearance;
 hook_hook_length=25;
-hook_hook_tip_length=hook_thickness*2;
+hook_hook_tip_length=hook_thickness*3;
 
 slider_base_width = entrance_width - clearance;
 slider_base_length = entrance_length - clearance;
