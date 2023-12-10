@@ -7,7 +7,7 @@ wiggle_room=0.05;
 pump_part_length=7; // how much over the pump
 well_part_length=12; // how far should the adapter go into the well 
 circle_points = 250;
-adapter_wall=1;
+adapter_wall=2.5;
 middle_piece_length=5;
 // -- //
 
