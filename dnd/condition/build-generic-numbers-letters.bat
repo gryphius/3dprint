@@ -22,4 +22,19 @@ openscad -D num=4 -D "txt="""G"" -o G.stl conditions.scad
 openscad -D num=4 -D "txt="""H"" -o H.stl conditions.scad
 openscad -D num=4 -D "txt="""I"" -o I.stl conditions.scad
 openscad -D num=4 -D "txt="""J"" -o J.stl conditions.scad
-
+openscad -D num=4 -D "txt="""K"" -o K.stl conditions.scad
+openscad -D num=4 -D "txt="""L"" -o L.stl conditions.scad
+openscad -D num=4 -D "txt="""M"" -o M.stl conditions.scad
+openscad -D num=4 -D "txt="""N"" -o N.stl conditions.scad
+openscad -D num=4 -D "txt="""O"" -o O.stl conditions.scad
+openscad -D num=4 -D "txt="""P"" -o P.stl conditions.scad
+openscad -D num=4 -D "txt="""Q"" -o Q.stl conditions.scad
+openscad -D num=4 -D "txt="""R"" -o R.stl conditions.scad
+openscad -D num=4 -D "txt="""S"" -o S.stl conditions.scad
+openscad -D num=4 -D "txt="""T"" -o T.stl conditions.scad
+openscad -D num=4 -D "txt="""U"" -o U.stl conditions.scad
+openscad -D num=4 -D "txt="""V"" -o V.stl conditions.scad
+openscad -D num=4 -D "txt="""W"" -o W.stl conditions.scad
+openscad -D num=4 -D "txt="""X"" -o X.stl conditions.scad
+openscad -D num=4 -D "txt="""Y"" -o Y.stl conditions.scad
+openscad -D num=4 -D "txt="""Z"" -o Z.stl conditions.scad
